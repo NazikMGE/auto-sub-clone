@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # auto-subtitles
 
 This template should help get you started developing with Vue 3 in Vite.
@@ -39,3 +40,7 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+=======
+# auto-sub-clone
+None
+>>>>>>> 33de773c6a7cb571d68778a68abc76c49d8c3879
