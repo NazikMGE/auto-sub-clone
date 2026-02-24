@@ -1,0 +1,80 @@
+@import 'tailwindcss';
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    @apply bg-slate-50 text-slate-700 dark:bg-slate-900 dark:text-slate-300;
+    @apply antialiased;
+    @apply transition-colors duration-300;
+  }
+
+  /* Кастомні стилі для скролбару */
+  ::-webkit-scrollbar {
+    width: 10px; /* Трохи ширший для зручності */
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-100 dark:bg-slate-800;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-blue-500 dark:bg-indigo-600 rounded-md; /* Закруглені краї */
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-blue-600 dark:bg-indigo-500;
+  }
+
+  /* Загальні стилі для контейнера, якщо потрібні */
+  .main-container {
+    @apply container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@layer components {
+  /* Тут можна додати кастомні компоненти, якщо потрібно */
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold tracking-tight text-slate-900 dark:text-white text-center;
+  }
+  .section-subtitle {
+    @apply mt-3 text-lg md:text-xl text-slate-600 dark:text-slate-400 text-center max-w-2xl mx-auto;
+  }
+}
+
+/* Стилі для анімації появи */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease-out;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateY(10px);
+  opacity: 0;
+}
+
+@keyframes breath {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05); /* Наскільки лого буде "збільшуватися" */
+    opacity: 0.9; /* Невелика зміна прозорості для плавності */
+  }
+}
+
+.animate-breath {
+  animation: breath 3s ease-in-out infinite; /* Тривалість 3 секунди, плавний початок/кінець, нескінченно */
+}
