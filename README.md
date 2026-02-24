@@ -44,3 +44,4 @@ npm run lint
 # auto-sub-clone
 None
 >>>>>>> 33de773c6a7cb571d68778a68abc76c49d8c3879
+Це зміни, зроблені у гілці dev
