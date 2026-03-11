@@ -261,7 +261,6 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { useNotifications } from '@/composables/useNotifications';
 import api from '@/services/api';
@@ -284,7 +283,6 @@ import {
   DocumentTextIcon
 } from '@heroicons/vue/24/outline';
 
-const router = useRouter();
 const authStore = useAuthStore();
 const avatarInputRef = ref(null);
 const avatarLoading = ref(false);

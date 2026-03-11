@@ -364,7 +364,6 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
 import { useNotifications } from '@/composables/useNotifications';
 import api from '@/services/api';
 import {
@@ -382,13 +381,11 @@ import {
   LightBulbIcon,
   CheckIcon,
   FilmIcon,
-  CalendarIcon,
-  UserIcon
+  CalendarIcon
 } from '@heroicons/vue/24/outline';
 
 const route = useRoute();
 const router = useRouter();
-const authStore = useAuthStore();
 const { addSuccessNotification, addErrorNotification, addInfoNotification } = useNotifications();
 
 // Стан сторінки
@@ -409,17 +406,6 @@ const isProcessing = computed(() => {
   return status === 'queued' || status === 'processing_online' || status === 'processing_local';
 });
 const isError = computed(() => project.value?.status === 'error');
-
-// Нові обчислювані властивості для типу файлу
-const isAudioFile = computed(() => {
-  return project.value?.contentType?.startsWith('audio/');
-});
-const isVideoFile = computed(() => {
-  return project.value?.contentType?.startsWith('video/');
-});
-const isAudioOrVideoFile = computed(() => {
-  return isAudioFile.value || isVideoFile.value;
-});
 
 // Завантаження даних проекту
 const loadProjectData = async () => {
@@ -704,46 +690,6 @@ const LANGUAGE_NAMES = {
 
 const getLanguageName = (languageCode) => {
   return LANGUAGE_NAMES[languageCode] || languageCode || 'Українська';
-};
-
-const displayLanguage = computed(() => {
-  // Якщо мова була "auto" і проект завершено успішно
-  if (project.value?.language === 'auto' && 
-      isCompleted.value && 
-      project.value?.resultStats?.detected_language) {
-    // Повертаємо визначену мову та додаємо інформацію про впевненість
-    const detectedLang = project.value.resultStats.detected_language;
-    const confidence = project.value.resultStats.language_confidence;
-    
-    // Повертаємо рядок з інформацією про визначену мову та впевненість
-    return {
-      code: detectedLang,
-      confidence: confidence,
-      isDetected: true
-    };
-  }
-  
-  // Інакше повертаємо вихідну мову
-  return {
-    code: project.value?.language || 'uk',
-    confidence: null,
-    isDetected: false
-  };
-});
-
-const getLanguageDisplay = (languageInfo) => {
-  if (!languageInfo) return 'Українська';
-  
-  const languageName = LANGUAGE_NAMES[languageInfo.code] || languageInfo.code || 'Українська';
-  
-  // Якщо це визначена мова, додаємо інформацію про впевненість
-  if (languageInfo.isDetected && languageInfo.confidence) {
-    // Форматуємо впевненість як відсоток
-    const confidencePercent = Math.round(languageInfo.confidence * 100);
-    return `${languageName} (визначено, ${confidencePercent}% впевненості)`;
-  }
-  
-  return languageName;
 };
 
 const loadProjectStats = async () => {

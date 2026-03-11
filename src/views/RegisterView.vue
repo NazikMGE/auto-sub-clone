@@ -343,8 +343,6 @@ const handleRegister = async () => {
       
       } else if (Array.isArray(error.response.data.detail)) {
         // Обробка інших помилок валідації
-        const validationErrors = error.response.data.detail;
-        // Можна вивести більш конкретну помилку з масиву validationErrors
         errorMsg.value = 'Помилка валідації даних. Перевірте введені дані.';
         
       } else if (error.response.data.detail) {

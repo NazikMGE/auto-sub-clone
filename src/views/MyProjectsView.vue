@@ -257,8 +257,6 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
 import { useNotifications } from '@/composables/useNotifications';
 import api from '@/services/api';
 import {
@@ -274,8 +272,6 @@ import {
   DocumentPlusIcon
 } from '@heroicons/vue/24/outline';
 
-const router = useRouter();
-const authStore = useAuthStore();
 const { addSuccessNotification, addErrorNotification } = useNotifications();
 
 // Стан сторінки
@@ -411,13 +407,6 @@ const filteredProjects = computed(() => {
   });
   
   return result;
-});
-
-// Пагіновані проекти
-const paginatedProjects = computed(() => {
-  const startIndex = (currentPage.value - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  return filteredProjects.value.slice(startIndex, endIndex);
 });
 
 // Загальна кількість сторінок

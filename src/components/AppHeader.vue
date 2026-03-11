@@ -300,19 +300,18 @@ import { useAuthStore } from '@/stores/auth';
 import { useNotifications } from '@/composables/useNotifications';
 import logoUrl from '@/assets/logo.svg';
 import {
-  Bars3Icon, 
-  XMarkIcon, 
-  BellIcon, 
-  PlusIcon, 
-  HomeIcon, 
+  Bars3Icon,
+  XMarkIcon,
+  BellIcon,
+  PlusIcon,
+  HomeIcon,
   VideoCameraIcon,
-  Cog6ToothIcon, 
-  ChartBarIcon, 
+  Cog6ToothIcon,
   UserCircleIcon,
-  ArrowRightOnRectangleIcon, 
+  ArrowRightOnRectangleIcon,
   InformationCircleIcon,
   CheckCircleIcon,
-  ExclamationCircleIcon, 
+  ExclamationCircleIcon,
   ExclamationTriangleIcon
 } from '@heroicons/vue/24/outline';
 
@@ -339,8 +338,7 @@ const {
   markAllAsRead,
   removeNotification,
   formatNotificationTime,
-  getNotificationTypeClasses,
-  getNotificationIcon 
+  getNotificationTypeClasses
 } = useNotifications();
 
 // Обчислювані властивості для даних користувача
@@ -442,40 +440,41 @@ const handleClickOutside = (event) => {
   }
 };
 
+// Обробники подій як іменовані функції для коректного removeEventListener
+const handleNewNotification = (event) => {
+  // Перевіряємо опції сповіщення
+  const options = event.detail.options || {};
+
+  // Якщо вказано autoOpen = true або не вказано (за замовчуванням true)
+  if (options.autoOpen !== false) {
+    // Відкриваємо меню сповіщень автоматично
+    notificationMenuOpen.value = true;
+
+    // Закриваємо меню автоматично через 5 секунд, якщо користувач не взаємодіє з ним
+    setTimeout(() => {
+      // Перевіряємо, чи користувач не наводить курсор на меню сповіщень
+      const notificationMenu = document.getElementById('notification-menu');
+      if (notificationMenu && !notificationMenu.matches(':hover')) {
+        notificationMenuOpen.value = false;
+      }
+    }, 5000);
+  }
+};
+
+const handleUserAvatarUpdated = () => {
+  console.log('Avatar updated, refreshing header component');
+};
+
 // Для слухача подій нових сповіщень
 const setupNotificationEventListeners = () => {
-  // Додаємо слухача для автоматичного відкриття меню сповіщень при появі нового
-  window.addEventListener('new-notification', (event) => {
-    // Перевіряємо опції сповіщення
-    const options = event.detail.options || {};
-    
-    // Якщо вказано autoOpen = true або не вказано (за замовчуванням true)
-    if (options.autoOpen !== false) {
-      // Відкриваємо меню сповіщень автоматично
-      notificationMenuOpen.value = true;
-      
-      // Закриваємо меню автоматично через 5 секунд, якщо користувач не взаємодіє з ним
-      setTimeout(() => {
-        // Перевіряємо, чи користувач не наводить курсор на меню сповіщень
-        const notificationMenu = document.getElementById('notification-menu');
-        if (notificationMenu && !notificationMenu.matches(':hover')) {
-          notificationMenuOpen.value = false;
-        }
-      }, 5000);
-    }
-  });
-  
-  // Додаємо слухача подій для оновлення аватара
-  window.addEventListener('user-avatar-updated', (event) => {
-    console.log('Avatar updated, refreshing header component');
-    // В реальному додатку тут можна оновити інтерфейс, якщо потрібно
-  });
+  window.addEventListener('new-notification', handleNewNotification);
+  window.addEventListener('user-avatar-updated', handleUserAvatarUpdated);
 };
 
 // Очищення слухачів для уникнення витоків пам'яті
 const cleanupNotificationEventListeners = () => {
-  window.removeEventListener('new-notification', () => {});
-  window.removeEventListener('user-avatar-updated', () => {});
+  window.removeEventListener('new-notification', handleNewNotification);
+  window.removeEventListener('user-avatar-updated', handleUserAvatarUpdated);
 };
 
 watch(route, () => {

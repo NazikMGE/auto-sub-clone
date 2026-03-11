@@ -62,7 +62,6 @@ import { useAuthStore } from '@/stores/auth';
 import BaseButton from '../ui/BaseButton.vue';
 import {
   PlusIcon,
-  CheckCircleIcon,
   DocumentTextIcon
 } from '@heroicons/vue/24/outline';
 

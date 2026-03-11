@@ -44,7 +44,7 @@ api.interceptors.response.use(
         try {
           const authStore = useAuthStore();
           authStore.logout();
-        } catch (e) {
+        } catch {
           // Якщо не вдається отримати доступ до store, просто видаляємо токен
           localStorage.removeItem('token');
           localStorage.removeItem('token_created_at');

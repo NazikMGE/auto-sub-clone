@@ -513,7 +513,6 @@
 <script setup>
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
 import { useNotifications } from '@/composables/useNotifications';
 import api from '@/services/api';
 import {
@@ -540,7 +539,6 @@ import {
 } from '@heroicons/vue/24/outline';
 
 const router = useRouter();
-const authStore = useAuthStore();
 const { addSuccessNotification, addErrorNotification, addInfoNotification } = useNotifications();
 
 // Стан процесу
@@ -782,11 +780,11 @@ const processingDisabled = computed(() => {
 });
 
 // Обробники для перетягування
-const handleDragover = (event) => {
+const handleDragover = () => {
   isDragover.value = true;
 };
 
-const handleDragleave = (event) => {
+const handleDragleave = () => {
   isDragover.value = false;
 };
 
@@ -1092,7 +1090,7 @@ const setupBeforeUnloadHandler = () => {
   window.addEventListener('beforeunload', cleanupBeforeUnload);
 };
 
-const cleanupBeforeUnload = (event) => {
+const cleanupBeforeUnload = () => {
   // Якщо є завантажений файл, але не створено job, потрібно викликати очищення
   // Але в обробнику beforeUnload не можна виконувати асинхронні запити
   // Тому просто встановлюємо маркер, що сторінка закривається

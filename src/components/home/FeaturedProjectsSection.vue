@@ -113,7 +113,6 @@ import BaseButton from '../ui/BaseButton.vue';
 import api from '@/services/api';
 import {
   ChatBubbleLeftRightIcon,
-  PlusIcon,
   ArrowRightIcon,
   DocumentTextIcon,
   FilmIcon,

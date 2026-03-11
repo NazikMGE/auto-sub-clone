@@ -316,8 +316,6 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth';
 import { useNotifications } from '@/composables/useNotifications';
 import api from '@/services/api';
 import {
@@ -336,14 +334,10 @@ import {
   ExclamationTriangleIcon
 } from '@heroicons/vue/24/outline';
 
-const router = useRouter();
-const authStore = useAuthStore();
-
 // Використовуємо хук для сповіщень
-const { 
-  addSuccessNotification, 
-  addErrorNotification, 
-  addWarningNotification,
+const {
+  addSuccessNotification,
+  addErrorNotification,
   addInfoNotification
 } = useNotifications();
 
@@ -470,7 +464,7 @@ const testAndSaveApiKey = async () => {
 
   try {
     // Відправка ключа на бекенд для перевірки та збереження
-    const response = await api.put('/api/v1/users/api-keys/assemblyai', {
+    await api.put('/api/v1/users/api-keys/assemblyai', {
       key: settings.value.api.assemblyAI.key
     });
     
